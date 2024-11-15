@@ -150,7 +150,6 @@ class BigInteger:
         return temp_obj
 
     def karatsuba_multiply(self, other):
-        # Convert arrays to numbers for easier calculation
         def list_to_number(lst):
             return int(''.join(map(str, lst)))
 
@@ -235,18 +234,12 @@ class BigInteger:
         return temp
 
 
-    def pow(self,integer):
-        if integer < 0:
-            isFloat = True
-        else:
-            number = integer
+    def pow(self,number):
+
         temp = BigInteger(1)
         for i in range(0,number):
             temp = temp.multiply(self)
 
-        if isFloat:
-            print("Division by negetive value is not valid for BigIntegers")
-            pass
         return temp
     def left_shift(self, n):
         if self._array == [0]:  # if number is zero, no shift changes anything
@@ -271,9 +264,9 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger("20000000000000000000000000000000000000")
-obj2 = BigInteger("-300000058575405455455400000")
-obj1 = obj1.divide(obj2)
+obj1 = BigInteger("-20")
+
+obj1 = obj1.pow(4)
 print(obj1.get())
 
 
