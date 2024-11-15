@@ -131,7 +131,6 @@ class BigInteger:
         other._array_rev = list(reversed(other._array))
 
         result = [0] * (len(self._array_rev) + len(other._array_rev))
-
         for i in range(len(self._array_rev)):
             for j in range(len(other._array_rev)):
                 result[i + j] += self._array_rev[i] * other._array_rev[j]
@@ -191,6 +190,11 @@ class BigInteger:
 
         return result
 
+    def factorial(cls,n):
+        temp = BigInteger(1)
+        for i in range(1,n+1):
+            temp = temp.multiply(BigInteger(i))
+        return temp
     def left_shift(self, n):
         if self._array == [0]:  # if number is zero, no shift changes anything
             return self
@@ -214,12 +218,14 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger(400)
-obj2 = BigInteger("200")
-obj3 = obj1.karatsuba_multiply(obj2)
-# obj4 = obj1.subtract(obj2)
-#
+obj1 = BigInteger(1)
+obj2 = BigInteger("9")
+obj3 = obj1.multiply(obj2)
+# # # obj4 = obj1.subtract(obj2)
+# # #
 print(obj3.get())
-# print(obj4.get())
+# # print(obj4.get())
+print(BigInteger.factorial(BigInteger,10).get())
+
 
 
