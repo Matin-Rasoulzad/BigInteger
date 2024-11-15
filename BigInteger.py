@@ -126,6 +126,71 @@ class BigInteger:
         temp_obj = BigInteger(result)
         return temp_obj
 
+    def multiply(self, other):
+        self._array_rev = list(reversed(self._array))
+        other._array_rev = list(reversed(other._array))
+
+        result = [0] * (len(self._array_rev) + len(other._array_rev))
+
+        for i in range(len(self._array_rev)):
+            for j in range(len(other._array_rev)):
+                result[i + j] += self._array_rev[i] * other._array_rev[j]
+                result[i + j + 1] += result[i + j] // 10
+                result[i + j] %= 10
+
+        while len(result) > 1 and result[-1] == 0:
+            result.pop()
+
+        result.reverse()
+
+        temp_obj = BigInteger(result)
+
+        if self.sign != other.sign:
+            temp_obj.sign = False
+
+        return temp_obj
+
+    def karatsuba_multiply(self, other):
+        # Convert arrays to numbers for easier calculation
+        def list_to_number(lst):
+            return int(''.join(map(str, lst)))
+
+        def number_to_list(num):
+            return [int(digit) for digit in str(num)]
+
+        # Base case for recursion
+        if len(self._array) == 1 or len(other._array) == 1:
+            return self.multiply(other)
+
+        n = max(len(self._array), len(other._array))
+        m = n // 2
+
+        # Split the numbers
+        high1 = list_to_number(self._array[:-m]) if len(self._array) > m else 0
+        low1 = list_to_number(self._array[-m:])
+        high2 = list_to_number(other._array[:-m]) if len(other._array) > m else 0
+        low2 = list_to_number(other._array[-m:])
+
+        # Create BigInteger objects for high and low parts
+        high1_big = BigInteger(high1)
+        low1_big = BigInteger(low1)
+        high2_big = BigInteger(high2)
+        low2_big = BigInteger(low2)
+
+        # Recursive Karatsuba calls
+        z0 = low1_big.karatsuba_multiply(low2_big)  # low1 * low2
+        z2 = high1_big.karatsuba_multiply(high2_big)  # high1 * high2
+        z1 = (low1_big.add(high1_big)).karatsuba_multiply(low2_big.add(high2_big))  # (low1 + high1) * (low2 + high2)
+        z1 = z1.subtract(z0).subtract(z2)  # Subtract z0 and z2 from z1
+
+        # Combine results: z2 * 10^(2*m) + z1 * 10^m + z0
+        result = z2.left_shift(2 * m).add(z1.left_shift(m)).add(z0)
+
+        # Adjust the sign of the result
+        result.sign = (self.sign == other.sign)
+
+        return result
+
     def left_shift(self, n):
         if self._array == [0]:  # if number is zero, no shift changes anything
             return self
@@ -149,9 +214,9 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger([4,0,0])
+obj1 = BigInteger(400)
 obj2 = BigInteger("200")
-obj3 = obj1.add(obj2)
+obj3 = obj1.karatsuba_multiply(obj2)
 # obj4 = obj1.subtract(obj2)
 #
 print(obj3.get())
