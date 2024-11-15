@@ -190,16 +190,64 @@ class BigInteger:
 
         return result
 
+    def divide(self, other):
+        # Handle sign of the result
+        result_sign = self.sign == other.sign
+
+        # Work with absolute values
+        dividend = self._array[:]  # Copy of the dividend
+        divisor = other._array[:]  # Copy of the divisor
+
+        # Initialize result and remainder
+        result = []
+        remainder = []
+
+        for digit in dividend:
+            remainder.append(digit)  # Append the current digit to the remainder
+            # Remove leading zeros in the remainder
+            while len(remainder) > 1 and remainder[0] == 0:
+                remainder.pop(0)
+
+            # Determine how many times the divisor fits into the remainder
+            remainder_value = int(''.join(map(str, remainder)))
+            divisor_value = int(''.join(map(str, divisor)))
+
+            quotient_digit = remainder_value // divisor_value
+            result.append(quotient_digit)
+
+            # Update the remainder
+            remainder_value -= quotient_digit * divisor_value
+            remainder = list(map(int, str(remainder_value)))
+
+        result.reverse()
+        while len(result) > 1 and result[-1] == 0:
+            result.pop()
+        result.reverse()
+        # Convert result to BigInteger
+        result_obj = BigInteger(result)
+        result_obj.sign = result_sign
+
+        return result_obj
+
     def factorial(cls,n):
         temp = BigInteger(1)
         for i in range(1,n+1):
             temp = temp.karatsuba_multiply(BigInteger(i))
         return temp
 
-    def pow(self,number):
+
+    def pow(self,integer):
+        if integer < 0:
+            isFloat = True
+        else:
+            number = integer
         temp = BigInteger(1)
         for i in range(0,number):
             temp = temp.multiply(self)
+
+        if isFloat:
+            print("Division by negetive value is not valid for BigIntegers")
+            pass
         return temp
     def left_shift(self, n):
         if self._array == [0]:  # if number is zero, no shift changes anything
@@ -224,8 +272,9 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger(10)
-obj1 = obj1.pow(3)
+obj1 = BigInteger("200")
+obj2 = BigInteger("-3")
+obj1 = obj1.divide(obj2)
 print(obj1.get())
 
 
