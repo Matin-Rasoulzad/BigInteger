@@ -209,7 +209,7 @@ class BigInteger:
             # Converting every value to int
             remainder_value = int(''.join(map(str, remainder)))
             divisor_value = int(''.join(map(str, divisor)))
-            
+
             # Determine how many times the divisor fits into the remainder
             quotient_digit = remainder_value // divisor_value
             result.append(quotient_digit)
