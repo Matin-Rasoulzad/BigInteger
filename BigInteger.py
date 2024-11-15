@@ -194,11 +194,9 @@ class BigInteger:
         # Handle sign of the result
         result_sign = self.sign == other.sign
 
-        # Work with absolute values
-        dividend = self._array[:]  # Copy of the dividend
-        divisor = other._array[:]  # Copy of the divisor
+        dividend = self._array[:]  # Copy of the dividend(Maghsoom)
+        divisor = other._array[:]  # Copy of the divisor(Maghsoom alayh)
 
-        # Initialize result and remainder
         result = []
         remainder = []
 
@@ -208,10 +206,11 @@ class BigInteger:
             while len(remainder) > 1 and remainder[0] == 0:
                 remainder.pop(0)
 
-            # Determine how many times the divisor fits into the remainder
+            # Converting every value to int
             remainder_value = int(''.join(map(str, remainder)))
             divisor_value = int(''.join(map(str, divisor)))
-
+            
+            # Determine how many times the divisor fits into the remainder
             quotient_digit = remainder_value // divisor_value
             result.append(quotient_digit)
 
@@ -272,10 +271,9 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger("200")
-obj2 = BigInteger("-3")
+obj1 = BigInteger("20000000000000000000000000000000000000")
+obj2 = BigInteger("-300000058575405455455400000")
 obj1 = obj1.divide(obj2)
 print(obj1.get())
-
 
 
