@@ -176,9 +176,12 @@ class BigInteger:
         low2_big = BigInteger(low2)
 
         # Recursive Karatsuba calls
-        z0 = low1_big.karatsuba_multiply(low2_big)  # low1 * low2
-        z2 = high1_big.karatsuba_multiply(high2_big)  # high1 * high2
-        z1 = (low1_big.add(high1_big)).karatsuba_multiply(low2_big.add(high2_big))  # (low1 + high1) * (low2 + high2)
+        z0 = low1_big.karatsuba_multiply(low2_big)  # low1 * low2 (b * d)
+        z2 = high1_big.karatsuba_multiply(high2_big)  # high1 * high2 (a * c)
+
+        # (low1 + high1) * (low2 + high2) | (a + b) (c + d)
+        z1 = (low1_big.add(high1_big)).karatsuba_multiply(low2_big.add(high2_big))
+
         z1 = z1.subtract(z0).subtract(z2)  # Subtract z0 and z2 from z1
 
         # Combine results: z2 * 10^(2*m) + z1 * 10^m + z0
