@@ -170,7 +170,6 @@ class BigInteger:
         low2 = list_to_number(other._array[-m:])
 
         # Create BigInteger objects for high and low parts
-        print(high1)
         high1_big = BigInteger(high1)
         low1_big = BigInteger(low1)
         high2_big = BigInteger(high2)
@@ -209,7 +208,6 @@ class BigInteger:
             while len(remainder) > 1 and remainder[0] == 0:
                 remainder.pop(0)
 
-            # Converting every value to int
             remainder_value = int(''.join(map(str, remainder)))
             divisor_value = int(''.join(map(str, divisor)))
 
@@ -225,6 +223,7 @@ class BigInteger:
         while len(result) > 1 and result[-1] == 0:
             result.pop()
         result.reverse()
+
         # Convert result to BigInteger
         result_obj = BigInteger(result)
         result_obj.sign = result_sign
@@ -268,8 +267,35 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger("160")
-obj2 = BigInteger("200")
-print(obj1.karatsuba_multiply(obj2).get())
+
+
+
+
+obj1 = BigInteger("123456789123456789")
+obj2 = BigInteger("987654321987654321")
+
+result_add = obj1.add(obj2)
+print("Addition Result:", result_add.get())
+
+result_sub = obj1.subtract(obj2)
+print("Subtraction Result:", result_sub.get())
+
+result_mul = obj1.multiply(obj2)
+print("Multiplication Result:", result_mul.get())
+
+result_karatsuba = obj1.karatsuba_multiply(obj2)
+print("Karatsuba Multiplication Result:", result_karatsuba.get())
+
+result_div = obj2.divide(obj1)
+print("Division Result:", result_div.get())
+
+result_pow = obj1.pow(3)
+print("Power Result (obj1^3):", result_pow.get())
+
+result_fact = BigInteger.factorial(BigInteger,5)
+print("Factorial Result (5!):", result_fact.get())
+
+
+
 
 
