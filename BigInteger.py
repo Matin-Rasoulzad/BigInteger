@@ -170,6 +170,7 @@ class BigInteger:
         low2 = list_to_number(other._array[-m:])
 
         # Create BigInteger objects for high and low parts
+        print(high1)
         high1_big = BigInteger(high1)
         low1_big = BigInteger(low1)
         high2_big = BigInteger(high2)
@@ -267,9 +268,8 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger("-20")
-
-obj1 = obj1.pow(4)
-print(obj1.get())
+obj1 = BigInteger("160")
+obj2 = BigInteger("200")
+print(obj1.karatsuba_multiply(obj2).get())
 
 
