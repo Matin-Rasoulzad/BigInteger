@@ -193,7 +193,13 @@ class BigInteger:
     def factorial(cls,n):
         temp = BigInteger(1)
         for i in range(1,n+1):
-            temp = temp.multiply(BigInteger(i))
+            temp = temp.karatsuba_multiply(BigInteger(i))
+        return temp
+
+    def pow(self,number):
+        temp = BigInteger(1)
+        for i in range(0,number):
+            temp = temp.multiply(self)
         return temp
     def left_shift(self, n):
         if self._array == [0]:  # if number is zero, no shift changes anything
@@ -218,14 +224,9 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger(1)
-obj2 = BigInteger("9")
-obj3 = obj1.multiply(obj2)
-# # # obj4 = obj1.subtract(obj2)
-# # #
-print(obj3.get())
-# # print(obj4.get())
-print(BigInteger.factorial(BigInteger,10).get())
+obj1 = BigInteger(10)
+obj1 = obj1.pow(3)
+print(obj1.get())
 
 
 
