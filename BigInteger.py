@@ -149,7 +149,7 @@ class BigInteger:
         self._array_rev = list(reversed(self._array))
         return self
 
-obj1 = BigInteger(-400)
+obj1 = BigInteger([4,0,0])
 obj2 = BigInteger("200")
 obj3 = obj1.add(obj2)
 # obj4 = obj1.subtract(obj2)
