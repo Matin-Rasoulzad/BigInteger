@@ -240,9 +240,13 @@ class BigInteger:
     def pow(self,number):
 
         temp = BigInteger(1)
-        for i in range(0,number):
-            temp = temp.multiply(self)
+        base = self
 
+        while number > 0:
+            if number % 2 == 1:
+                temp = temp.multiply(base)
+            base = base.multiply(base)
+            number //= 2
         return temp
     def left_shift(self, n):
         if self._array == [0]:  # if number is zero, no shift changes anything
@@ -271,8 +275,8 @@ class BigInteger:
 
 
 
-obj1 = BigInteger("123456789123456789")
-obj2 = BigInteger("987654321987654321")
+obj1 = BigInteger("3")
+obj2 = BigInteger("4")
 
 result_add = obj1.add(obj2)
 print("Addition Result:", result_add.get())
@@ -289,7 +293,7 @@ print("Karatsuba Multiplication Result:", result_karatsuba.get())
 result_div = obj2.divide(obj1)
 print("Division Result:", result_div.get())
 
-result_pow = obj1.pow(3)
+result_pow = obj1.pow(5)
 print("Power Result (obj1^3):", result_pow.get())
 
 result_fact = BigInteger.factorial(BigInteger,5)
